@@ -14,7 +14,7 @@ class Account ():
     def withdraw(self, amount):
         pass
 
-
+#'monday standup'
 class Customer ():
     def __init__(self , id , first_name , last_name , password , checking_balance , savings_balance):
         self.id = id
