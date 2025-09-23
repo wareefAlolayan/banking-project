@@ -2,17 +2,23 @@ import csv
 class Account ():
     def __init__(self, kind, balance=0):
         self.kind = kind # check or save
-        self._balance = balance
+        self.balance = balance
 
     @property
     def balance(self):
-        return self._balance
+        return self.balance
 
     def deposit(self, amount):
-        pass
+        amount = int(amount)
+        if amount <= 0:
+            raise ValueError("amount must be > 0")
+        self.balance += amount
 
     def withdraw(self, amount):
-        pass
+        amount = int(amount)
+        if amount <= 0:
+            raise ValueError("amount must be > 0")
+        self.balance -= amount
 
 class Customer ():
     def __init__(self , account_id , first_name , last_name , password , open_checking=False , open_savings=False, checking_balance=0 , savings_balance=0):
