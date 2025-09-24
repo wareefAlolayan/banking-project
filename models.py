@@ -100,14 +100,18 @@ class Bank:
                     checking_balance=balance_checking,
                     savings_balance=balance_savings,
                 )
+                customer.active = ( row["active"]  == "true")
+                customer.overdrafts = row["overdrafts"]
                 self.customers.append(customer)
+
+
     def save_to_csv(self):
-        rows = [['account_id', 'frst_name', 'last_name', 'password', 'balance_checking', 'balance_savings']]
+        rows = [['account_id', 'frst_name', 'last_name', 'password', 'balance_checking', 'balance_savings','active','overdrafts']]#added ,active,overdrafts
 
         for c in self.customers:
             bc = c.checking.balance if c.checking else ''
             bs = c.savings.balance  if c.savings  else ''
-            rows.append([c.account_id, c.first_name, c.last_name, c.password, bc, bs])
+            rows.append([c.account_id, c.first_name, c.last_name, c.password, bc, bs,c.active,c.overdrafts])
 
         # Write all rows
         with open(self.csv_path, mode='w', newline='', encoding='utf-8') as file:
