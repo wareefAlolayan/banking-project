@@ -113,3 +113,42 @@ class Bank:
         with open(self.csv_path, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file)
             writer.writerows(rows)
+
+    #customer management methods
+    def find_customer(self, account_id):
+        pass
+
+    def generate_unique_id(self):
+        pass
+
+    def add_customer(self, first_name, last_name, password,open_checking=False, open_savings=False,initial_checking=0, initial_savings=0):
+        pass
+
+    def authenticate(self, account_id, password):
+        #Find customer, ensure active, verify password, return customer or raise
+        pass
+    
+    #transaction methods
+    def withdraw(self, customer, kind, amount):
+        #Apply overdraft rules 
+        pass
+
+    def transfer_self(self, customer, from_kind, to_kind, amount):
+        pass
+
+    def transfer_to_customer(self, from_customer, from_kind, to_account_id, to_kind, amount):
+        pass
+
+    def deposit(self, customer, kind, amount):
+        pass
+
+
+    #overdraft methods
+    def reactivate(self, customer):
+        pass
+
+    def record_overdraft(self, customer, account):
+        pass
+
+    def deactivate(self, customer):
+        pass
