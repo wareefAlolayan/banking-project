@@ -87,7 +87,7 @@ class Customer ():
         self.active = False
     def reactivate(self):
         self.active = True
-
+    
 
 class Bank:
     def __init__(self):
