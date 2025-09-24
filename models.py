@@ -148,17 +148,31 @@ class Bank:
 
     #customer management methods
     def find_customer(self, account_id):
-        pass
-
+        for c in self.customers:
+            if c.account_id == str(account_id):
+                return c
     def generate_unique_id(self):
-        pass
+        last = int(self.customers[-1].account_id) 
+        return str(last + 1)
 
     def add_customer(self, first_name, last_name, password,open_checking=False, open_savings=False,initial_checking=0, initial_savings=0):
-        pass
-
+        new_id = self.generate_unique_id()
+        customer = Customer(new_id, first_name, last_name, password,open_checking=open_checking, open_savings=open_savings,checking_balance=initial_checking, savings_balance=initial_savings)
+        # default for new accounts
+        customer.active = True
+        customer.overdrafts = 0
+        self.customers.append(customer)
+        self.save_to_csv()
+        
     def authenticate(self, account_id, password):
-        #Find customer, ensure active, verify password, return customer or raise
-        pass
+        customer = self.find_customer(account_id)
+        if customer == None:
+            raise ValueError('customer not found')
+        if customer.active == False:
+            raise ValueError('account is deactivated')
+        if customer.verify_password(password) == False:
+            raise ValueError('invalid password')
+        return customer
     
     #transaction methods
     def withdraw(self, customer, kind, amount):
