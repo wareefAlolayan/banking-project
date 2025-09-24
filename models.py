@@ -40,20 +40,48 @@ class Customer ():
     def full_name(self):
         return f'{self.frst_name} {self.last_name}'
     
-    #create account later if it is set to none
+    
     def open_account(self, kind , initial=0):
-        pass
+    #if the account doesnt exist create it with the initial balance
+        if kind == 'checking':
+            if self.checking == None:
+                self.checking = Account('checking', initial)
+            else:
+                raise ValueError('checking account already exists')
+        elif kind == 'savings':
+            if self.savings == None:
+                self.savings = Account('savings', initial)
+            else:
+                raise ValueError('savings account already exists')
+        else:
+            raise ValueError('kind must be checking or savings ')
+        
      # for login
     def verify_password(self, pw):
-        pass
+        if pw == self.password:
+            return True
+        else:
+            return False
     
     #does the customer have the kind of account he wants to perform operations on?
     def has_account(self, kind):
-        pass
-    
+        if kind == 'checking':
+            return self.checking != None
+        elif kind == 'savings':
+            return self.savings != None
+        else:
+            raise ValueError('kind must be checking or savings')
+        
     # to use account obj for when depositing or withdrawing
     def get_account(self, kind):
-        pass
+        if kind == 'checking' and self.checking != None:
+            return self.checking
+        elif kind == 'savings' and self.savings != None:
+            return self.savings
+        elif kind == 'checking' or kind == 'savings':
+            raise ValueError(f'{kind} account does not exist')
+        else:
+            raise ValueError('kind must be checking or savings')
 
     def deactivate(self):
         self.active = False
