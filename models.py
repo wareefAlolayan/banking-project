@@ -298,7 +298,10 @@ class Bank:
         return customer.active
 
     def record_overdraft(self, customer, account):
-        pass
+        account.withdraw(self.overdraft_fee)
+        customer.overdrafts += 1
+        if customer.overdrafts >= 2:
+            customer.deactivate()
 
     def deactivate(self, customer):
         pass
