@@ -286,7 +286,16 @@ class Bank:
 
     #overdraft methods
     def reactivate(self, customer):
-        pass
+        can_reactivate = True
+        if customer.checking != None and customer.checking.balance < 0:
+            can_reactivate = False
+        if customer.savings != None and customer.savings.balance < 0:
+            can_reactivate = False
+
+        if can_reactivate == True:
+            customer.reactivate()
+
+        return customer.active
 
     def record_overdraft(self, customer, account):
         pass
