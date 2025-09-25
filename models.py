@@ -235,14 +235,41 @@ class Bank:
         return (src.balance, dst.balance)
 
     def transfer_to_customer(self, from_customer, from_kind, to_account_id, to_kind, amount):
-        pass
+        amount = int(amount)
+
+        if from_customer.active == False:
+            raise ValueError('account is deactivated')
+        if amount <= 0:
+            raise ValueError('amount must be > 0')
+        if from_customer.has_account(from_kind) == False:
+            raise ValueError(f'{from_kind} account not found')
+
+        to_customer = self.find_customer(to_account_id)
+        if to_customer == None:
+            raise ValueError('destination customer not found')
+        if to_customer.has_account(to_kind) == False:
+            raise ValueError(f'destination {to_kind} account not found')
+
+        if (from_customer.account_id == to_account_id) :
+            raise ValueError('cannot transfer to the same account')
+
+        src = from_customer.get_account(from_kind)
+        if src.balance < amount:
+            raise ValueError('insufficient funds for transfer')
+
+        src.withdraw(amount)
+        self.deposit(to_customer, to_kind, amount)
+
+        dst = to_customer.get_account(to_kind)
+        print(f'{amount} transferred from {from_customer.account_id} {from_kind} ,balance:{src.balance} to {to_account_id} {to_kind} ,balance:{dst.balance}')
+        return (src.balance, dst.balance)
 
     def deposit(self, customer, kind, amount):
         amount = int(amount)
         if amount <= 0:
-            raise ValueError("amount must be > 0")
+            raise ValueError('amount must be > 0')
         if customer.has_account(kind) == False:
-            raise ValueError(f"{kind} account not found")
+            raise ValueError(f'{kind} account not found')
 
         acnt = customer.get_account(kind)
         acnt.deposit(amount)
