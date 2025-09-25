@@ -215,8 +215,24 @@ class Bank:
         pass
 
     def deposit(self, customer, kind, amount):
-        pass
+        amount = int(amount)
+        if amount <= 0:
+            raise ValueError("amount must be > 0")
+        if customer.has_account(kind) == False:
+            raise ValueError(f"{kind} account not found")
 
+        acnt = customer.get_account(kind)
+        acnt.deposit(amount)
+        # reactivate only if the account was inactive and all existing accounts are now >= 0
+        if customer.active == False:
+            can_reactivate = True
+            if customer.checking != None and customer.checking.balance < 0:
+                can_reactivate = False
+            if customer.savings != None and customer.savings.balance < 0:
+                can_reactivate = False
+            if can_reactivate:
+                customer.reactivate()
+        return acnt.balance
 
     #overdraft methods
     def reactivate(self, customer):
