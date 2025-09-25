@@ -299,6 +299,3 @@ class Bank:
         customer.overdrafts += 1
         if customer.overdrafts >= 2:
             customer.deactivate()
-
-    def deactivate(self, customer):
-        pass
