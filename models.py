@@ -209,7 +209,30 @@ class Bank:
         return acnt.balance
 
     def transfer_self(self, customer, from_kind, to_kind, amount):
-        pass
+        amount = int(amount)
+
+        if customer.active == False:
+            raise ValueError('account is deactivated')
+        if amount <= 0:
+            raise ValueError('amount must be > 0')
+        if from_kind == to_kind:
+            raise ValueError('cannot transfer to the same account')
+
+        if customer.has_account(from_kind) == False:
+            raise ValueError(f'{from_kind} account not found')
+        if customer.has_account(to_kind) == False:
+            raise ValueError(f'{to_kind} account not found')
+
+        src = customer.get_account(from_kind)
+        if src.balance < amount:
+            raise ValueError('insufficient funds for transfer')
+
+        src.withdraw(amount)
+        self.deposit(customer, to_kind, amount)
+
+        dst = customer.get_account(to_kind)
+        print(f'{amount} transferred from {from_kind} ,balance:{src.balance} to {to_kind} ,balance:{dst.balance}')
+        return (src.balance, dst.balance)
 
     def transfer_to_customer(self, from_customer, from_kind, to_account_id, to_kind, amount):
         pass
