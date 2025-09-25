@@ -176,8 +176,37 @@ class Bank:
     
     #transaction methods
     def withdraw(self, customer, kind, amount):
-        #Apply overdraft rules 
-        pass
+        amount = int(amount)
+        if customer.active == False:
+            raise ValueError('account is deactivated')
+        if amount <= 0:
+            raise ValueError('amount must be > 0')
+        if customer.has_account(kind) == False:
+            raise ValueError(f'{kind} account not found')
+
+        acnt = customer.get_account(kind)
+        start = acnt.balance
+
+        if start < 0 and amount > self.negative_withdraw_limit:
+            raise ValueError('cannot withdraw more than 100 while negative')
+
+        fee_applies = (start >= 0 and (start - amount) < 0)
+        if fee_applies:
+            final_w = start - amount - self.overdraft_fee
+        else:
+            final_w = start - amount
+
+        if final_w < self.floor:
+            raise ValueError(f'withdrawal would exceed floor {self.floor}')
+        
+        acnt.withdraw(amount)
+        if fee_applies:
+            acnt.withdraw(self.overdraft_fee)
+            customer.overdrafts += 1
+            if customer.overdrafts >= 2:
+                customer.deactivate()
+
+        return acnt.balance
 
     def transfer_self(self, customer, from_kind, to_kind, amount):
         pass
