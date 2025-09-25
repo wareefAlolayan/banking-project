@@ -12,7 +12,13 @@ def main():
             print('3) Exit')
             choice = input('your choice: ').strip()
             if choice == '1':
-                pass
+                try:
+                    cid = input('account id: ')
+                    pw = input('password: ')
+                    customer = bank.authenticate(cid, pw)
+                    logged_in = True
+                except ValueError as e:
+                    print(e)
             elif choice == '2':
                 pass
 
