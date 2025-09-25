@@ -20,7 +20,19 @@ def main():
                 except ValueError as e:
                     print(e)
             elif choice == '2':
-                pass
+                try:
+                    first = input('first name: ')
+                    last = input('last name: ')
+                    pw = input('password: ')
+                    open_chk = input('open checking? (y/n): ').lower() 
+                    open_sav = input('open savings? (y/n): ').lower() 
+                    ic = int(input('initial checking : '))
+                    isv = int(input('initial savings : '))
+                    newc = bank.add_customer(first, last, pw, open_chk == 'y' , open_sav== 'y', ic, isv)
+                    print(f'created new custome , customer id : {newc.account_id}')
+                except ValueError as e:
+                    print(e)
+
 
             elif choice == '3':
                 pass
