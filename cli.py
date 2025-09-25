@@ -35,7 +35,8 @@ def main():
 
 
             elif choice == '3':
-                pass
+                print('bye')
+                break
             else:
                 print('invalid option')
         elif logged_in == True:
