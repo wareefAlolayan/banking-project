@@ -201,10 +201,7 @@ class Bank:
         
         acnt.withdraw(amount)
         if fee_applies:
-            acnt.withdraw(self.overdraft_fee)
-            customer.overdrafts += 1
-            if customer.overdrafts >= 2:
-                customer.deactivate()
+            self.record_overdraft(customer, acnt)
 
         return acnt.balance
 
