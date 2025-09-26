@@ -66,7 +66,11 @@ def main():
                     print(f'done, new {kind} balance: {newb}')
 
                 elif choice == '2':
-                    pass
+                    kind = input('account (checking/savings): ').lower()
+                    amt = int(input('amount: '))
+                    newb = bank.withdraw(customer, kind, amt)
+                    bank.save_to_csv()
+                    print(f'done, new {kind} balance: {newb}')
 
                 elif choice == '3':
                     pass
