@@ -81,7 +81,14 @@ def main():
                     print('transfer done')
 
                 elif choice == '4':
-                    pass
+                    from_kind = input('from? (checking/savings): ').lower()
+                    to_id   = input('to? account id: ')
+                    to_kind = input('to kind? (checking/savings): ').lower()
+                    amt = int(input('amount: '))
+                    bank.transfer_to_customer(customer, from_kind, to_id, to_kind, amt)
+                    bank.save_to_csv()
+                    print('transfer done')
+
                 elif choice == '5':
                     pass
                 else:
