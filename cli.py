@@ -40,4 +40,35 @@ def main():
             else:
                 print('invalid option')
         elif logged_in == True:
-            pass
+            print(f'Welcome {customer.full_name}')
+            if customer.checking != None:
+                cb = customer.checking.balance
+            else:
+                cb = 'none'
+            if customer.savings.balance != None:
+                sb = customer.savings.balance  
+            else:
+                sb = 'none'
+                
+            print(f'checking: {cb}   savings: {sb}')
+            print('1) Deposit')
+            print('2) withdraw')
+            print('3) Transfer between your accounts')
+            print('4) Transfer to different customer')
+            print('5) Logout')
+            choice = input('your choice: ').strip()
+            try:
+                if choice == '1':
+                    pass
+
+                elif choice == '2':
+                    pass
+
+                elif choice == '3':
+                    pass
+
+                elif choice == '4':
+                    pass
+
+            except Exception as e:
+                print(e)
