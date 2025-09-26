@@ -90,9 +90,12 @@ def main():
                     print('transfer done')
 
                 elif choice == '5':
-                    pass
+                    logged_in = False
                 else:
                     print('invalid option')
 
             except Exception as e:
                 print(e)
+
+if __name__ == '__main__':
+    main()
