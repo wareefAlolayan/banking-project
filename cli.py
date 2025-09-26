@@ -73,7 +73,12 @@ def main():
                     print(f'done, new {kind} balance: {newb}')
 
                 elif choice == '3':
-                    pass
+                    from_kind = input('from? (checking/savings): ').lower()
+                    to_kind   = input('to?   (checking/savings): ').lower()
+                    amt = int(input('amount: '))
+                    bank.transfer_self(customer, from_kind, to_kind, amt)
+                    bank.save_to_csv()
+                    print('transfer done')
 
                 elif choice == '4':
                     pass
