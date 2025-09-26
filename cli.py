@@ -59,7 +59,11 @@ def main():
             choice = input('your choice: ').strip()
             try:
                 if choice == '1':
-                    pass
+                    kind = input('account (checking/savings): ').lower()
+                    amt = int(input('amount: '))
+                    newb = bank.deposit(customer, kind, amt)
+                    bank.save_to_csv()
+                    print(f'done, new {kind} balance: {newb}')
 
                 elif choice == '2':
                     pass
@@ -69,6 +73,10 @@ def main():
 
                 elif choice == '4':
                     pass
+                elif choice == '5':
+                    pass
+                else:
+                    print('invalid option')
 
             except Exception as e:
                 print(e)
