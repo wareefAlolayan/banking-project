@@ -141,7 +141,25 @@ class TestBankCore(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.bank.withdraw(self.c, 'checking', 10000) #overdrafts =2
     def test_transfer_self(self):
-        pass
+        self.c = self.bank.find_customer('10001')
+        self.bank.transfer_self(self.c, 'checking', 'savings', 500) #1000-500=500 , 10000+500=10500
+        self.assertEqual(self.c.checking.balance, 500)
+        self.assertEqual(self.c.savings.balance, 10500)
+        with self.assertRaises(ValueError):
+            self.bank.transfer_self(self.c, 'checking', 'savings', 0) #transfer not >0
+        with self.assertRaises(ValueError):
+            self.bank.transfer_self(self.c, 'checking', 'savings', 600) #not sufficient funds
+        with self.assertRaises(ValueError):
+            self.bank.transfer_self(self.c, 'checking', 'checking', 10) #same account
+        c2 = self.bank.find_customer('10002')
+        with self.assertRaises(ValueError):
+            self.bank.transfer_self(c2, 'checking', 'savings', 10) #no from account
+        c3 = self.bank.find_customer('10006')
+        with self.assertRaises(ValueError):
+            self.bank.transfer_self(c3, 'checking', 'savings', 10) #no to account
+        c3 = self.bank.find_customer('10007')
+        with self.assertRaises(ValueError):
+            self.bank.transfer_self(c3, 'savings', 'checking', 10) #account deactivated
     def test_transfer_other(self):
         pass
     def test_reactivate(self):
