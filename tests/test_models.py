@@ -121,7 +121,13 @@ class TestBankCore(unittest.TestCase):
         self.assertEqual(newc.get_account('checking').balance, 500)
         self.assertEqual(newc.get_account('savings').balance, 1000)
     def test_authnticate(self):
-        pass
+        c = self.bank.authenticate('10001', 'juagw362')
+        self.assertIsInstance(c, Customer)
+        self.assertEqual(c.first_name, 'suresh')
+        with self.assertRaises(ValueError):
+            self.bank.authenticate('10001', 'wrongpassword')
+        with self.assertRaises(ValueError):
+            self.bank.authenticate('99999', 'somepassword')
     def test_withdraw(self):
         pass
     def test_transfer_self(self):
