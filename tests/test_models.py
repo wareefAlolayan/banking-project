@@ -112,7 +112,14 @@ class TestBankCore(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.bank.find_customer('99999')
     def test_add_customer(self):
-        pass
+        newc = self.bank.add_customer('a', 'b', 'c', True, True, 500, 1000)
+        self.assertIsInstance(newc, Customer)
+        self.assertEqual(newc.first_name, 'a')
+        self.assertEqual(newc.last_name, 'b')
+        self.assertTrue(newc.has_account('checking'))
+        self.assertTrue(newc.has_account('savings'))
+        self.assertEqual(newc.get_account('checking').balance, 500)
+        self.assertEqual(newc.get_account('savings').balance, 1000)
     def test_authnticate(self):
         pass
     def test_withdraw(self):

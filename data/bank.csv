@@ -7,3 +7,4 @@ account_id,frst_name,last_name,password,balance_checking,balance_savings,active,
 10006,w,w,w,-37,,false,2
 10007,w,w,w,-37,,false,2
 10008,a,b,c,10,20,true,0
+10009,a,b,c,500,1000,true,0
