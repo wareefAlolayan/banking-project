@@ -144,9 +144,14 @@ class Bank:
 
     #customer management methods
     def find_customer(self, account_id):
+        found = None
         for c in self.customers:
             if c.account_id == str(account_id):
+                found = c
                 return c
+        if found == None:
+            raise ValueError('customer not found')
+
     def generate_unique_id(self):
         last = int(self.customers[-1].account_id) 
         return str(last + 1)
