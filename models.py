@@ -23,7 +23,7 @@ class Account ():
 class Customer ():
     def __init__(self , account_id , first_name , last_name , password , open_checking=False , open_savings=False, checking_balance=0 , savings_balance=0):
         self.account_id = account_id
-        self.frst_name = first_name
+        self.first_name = first_name
         self.last_name = last_name
         self.password = password
         self.active = True
@@ -38,7 +38,7 @@ class Customer ():
             self.savings = None
     @property
     def full_name(self):
-        return f'{self.frst_name} {self.last_name}'
+        return f'{self.first_name} {self.last_name}'
     
     
     def open_account(self, kind , initial=0):
@@ -98,8 +98,8 @@ class Bank:
         self.floor = -100  #final balance cant go under this
         self.negative_withdraw_limit = 100
     def load_from_csv(self):
-        with open(self.csv_path, 'w' , newline='') as file:
-            reader = csv.DictWriter(file)
+        with open(self.csv_path, 'r' , newline='') as file:
+            reader = csv.DictReader(file)
             for row in reader:
                 account_id = row['account_id']
                 first = row['frst_name']   
@@ -139,10 +139,11 @@ class Bank:
         for c in self.customers:
             bc = c.checking.balance if c.checking else ''
             bs = c.savings.balance  if c.savings  else ''
-            rows.append([c.account_id, c.first_name, c.last_name, c.password, bc, bs,c.active,c.overdrafts])
+            active_str = 'true' if c.active else 'false'
+            rows.append([c.account_id, c.first_name, c.last_name, c.password, bc, bs,active_str,c.overdrafts])
 
         # Write all rows
-        with open(self.csv_path, mode='w', newline='', encoding='utf-8') as file:
+        with open(self.csv_path, mode='w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(rows)
 
@@ -163,6 +164,7 @@ class Bank:
         customer.overdrafts = 0
         self.customers.append(customer)
         self.save_to_csv()
+        return customer
         
     def authenticate(self, account_id, password):
         customer = self.find_customer(account_id)
@@ -296,6 +298,6 @@ class Bank:
 
     def record_overdraft(self, customer, account):
         account.withdraw(self.overdraft_fee)
-        customer.overdrafts += 1
+        customer.overdrafts = int(customer.overdrafts) + 1
         if customer.overdrafts >= 2:
             customer.deactivate()

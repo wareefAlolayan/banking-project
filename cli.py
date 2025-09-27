@@ -45,7 +45,7 @@ def main():
                 cb = customer.checking.balance
             else:
                 cb = 'none'
-            if customer.savings.balance != None:
+            if customer.savings != None:
                 sb = customer.savings.balance  
             else:
                 sb = 'none'
