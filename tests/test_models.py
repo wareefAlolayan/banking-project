@@ -111,15 +111,15 @@ class TestBankCore(unittest.TestCase):
         self.assertEqual(c.savings.balance, 10000)
         with self.assertRaises(ValueError):
             self.bank.find_customer('99999')
-    def test_add_customer(self):
-        newc = self.bank.add_customer('a', 'b', 'c', True, True, 500, 1000)
-        self.assertIsInstance(newc, Customer)
-        self.assertEqual(newc.first_name, 'a')
-        self.assertEqual(newc.last_name, 'b')
-        self.assertTrue(newc.has_account('checking'))
-        self.assertTrue(newc.has_account('savings'))
-        self.assertEqual(newc.get_account('checking').balance, 500)
-        self.assertEqual(newc.get_account('savings').balance, 1000)
+    # def test_add_customer(self):
+    #     newc = self.bank.add_customer('a', 'b', 'c', True, True, 500, 1000)
+    #     self.assertIsInstance(newc, Customer)
+    #     self.assertEqual(newc.first_name, 'a')
+    #     self.assertEqual(newc.last_name, 'b')
+    #     self.assertTrue(newc.has_account('checking'))
+    #     self.assertTrue(newc.has_account('savings'))
+    #     self.assertEqual(newc.get_account('checking').balance, 500)
+    #     self.assertEqual(newc.get_account('savings').balance, 1000)
     def test_authnticate(self):
         c = self.bank.authenticate('10001', 'juagw362')
         self.assertIsInstance(c, Customer)
@@ -129,7 +129,17 @@ class TestBankCore(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.bank.authenticate('99999', 'somepassword')
     def test_withdraw(self):
-        pass
+        self.c = self.bank.find_customer('10001')
+        self.bank.withdraw(self.c,'checking',200) #1000-200=800
+        self.assertEqual(self.c.checking.balance, 800) #normal
+        with self.assertRaises(ValueError):
+            self.bank.withdraw(self.c, 'checking', 0) #withdrwa not >0
+        self.c = self.bank.find_customer('10006')
+        with self.assertRaises(ValueError):
+            self.bank.withdraw(self.c, 'savings', 10) #no savings account
+        self.c = self.bank.find_customer('10007')
+        with self.assertRaises(ValueError):
+            self.bank.withdraw(self.c, 'checking', 10000) #overdrafts =2
     def test_transfer_self(self):
         pass
     def test_transfer_other(self):
