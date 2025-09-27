@@ -183,6 +183,10 @@ class TestBankCore(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.bank.transfer_to_customer(c5, 'checking', '10002', 'checking', 10) #from account deactivated
     def test_reactivate(self):
-        pass
+        c = self.bank.find_customer('10007')
+        self.bank.reactivate(c)
+        self.assertTrue(c.active)
+        self.assertEqual(c.overdrafts, 0)
+        c2 = self.bank.find_customer('10006')
     def test_record_overdraft(self):
         pass

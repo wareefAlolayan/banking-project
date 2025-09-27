@@ -274,13 +274,7 @@ class Bank:
         acnt.deposit(amount)
         # reactivate only if the account was inactive and all existing accounts are now >= 0
         if customer.active == False:
-            can_reactivate = True
-            if customer.checking != None and customer.checking.balance < 0:
-                can_reactivate = False
-            if customer.savings != None and customer.savings.balance < 0:
-                can_reactivate = False
-            if can_reactivate:
-                customer.reactivate()
+            customer.reactivate()
         return acnt.balance
 
     #overdraft methods
@@ -293,7 +287,7 @@ class Bank:
 
         if can_reactivate == True:
             customer.reactivate()
-
+        customer.overdrafts = 0
         return customer.active
 
     def record_overdraft(self, customer, account):
