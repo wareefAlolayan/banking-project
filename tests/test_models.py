@@ -153,7 +153,7 @@ class TestBankCore(unittest.TestCase):
             self.bank.transfer_self(self.c, 'checking', 'checking', 10) #same account
         c2 = self.bank.find_customer('10002')
         with self.assertRaises(ValueError):
-            self.bank.transfer_self(c2, 'checking', 'savings', 10) #no from account
+            self.bank.transfer_self(c2, 'savings', 'checking', 10) #no from account
         c3 = self.bank.find_customer('10006')
         with self.assertRaises(ValueError):
             self.bank.transfer_self(c3, 'checking', 'savings', 10) #no to account
@@ -161,7 +161,27 @@ class TestBankCore(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.bank.transfer_self(c3, 'savings', 'checking', 10) #account deactivated
     def test_transfer_other(self):
-        pass
+        c1 = self.bank.find_customer('10001')
+        c2 = self.bank.find_customer('10002')
+        self.bank.transfer_to_customer(c1, 'checking', '10002', 'checking', 500) #1000-500=500 , 10000+500=10500
+        self.assertEqual(c1.checking.balance, 500)
+        self.assertEqual(c2.checking.balance, 10500)
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c1, 'checking', '10002', 'checking', 0) #transfer not >0
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c1, 'checking', '10002', 'checking', 600) #not sufficient funds
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c1, 'checking', '10001', 'checking', 10) #same customer
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c1, 'checking', '99999', 'checking', 10) #to customer not found
+        c3 = self.bank.find_customer('10002')
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c3, 'checking', '10002', 'checking', 10) #no from account
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c1, 'checking', '10002', 'savings', 10) #to has no savings account
+        c5 = self.bank.find_customer('10007')
+        with self.assertRaises(ValueError):
+            self.bank.transfer_to_customer(c5, 'checking', '10002', 'checking', 10) #from account deactivated
     def test_reactivate(self):
         pass
     def test_record_overdraft(self):
