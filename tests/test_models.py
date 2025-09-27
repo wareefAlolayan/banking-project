@@ -75,5 +75,11 @@ from models import Account, Customer , Bank
 class TestBankCSV(unittest.TestCase):
     def test_load_from_csv_basic(self):
         bank = Bank()            
-        bank.load_from_csv()
-        self.assertEqual(bank.customers, 'x' )
+        x=bank.load_from_csv()
+        res=[]
+        for c in x:
+            bc = c.checking.balance if c.checking else None
+            bs = c.savings.balance if c.savings else None
+            res.append((c.account_id, c.first_name, c.last_name, c.password,bc, bs, c.active, int(c.overdrafts)))
+        expected_customers = [('10001','suresh','sigera','juagw362',1000,10000,True,0),('10002','james', 'taylor','idh36%@#FGd',10000,10000,True,0),('10003','melvin','gordon','uYWE732g4ga1',2000,20000,True,0),('10004','stacey','abrams','DEU8_qw3y72$',2000,20000,True,0),('10005','jake',  'paul',  'd^dg23g)@', 100000,100000, True, 0),('10006','w','w','w',-37,None, False, 2),('10007','w','w','w',-37,None,False, 2)]
+        self.assertEqual(res, expected_customers)

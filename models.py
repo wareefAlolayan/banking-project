@@ -121,16 +121,11 @@ class Bank:
                 else:
                     balance_savings = 0
 
-                customer = Customer(
-                    account_id, first, last, pw,
-                    open_checking=open_checking,
-                    open_savings=open_savings,
-                    checking_balance=balance_checking,
-                    savings_balance=balance_savings,
-                )
+                customer = Customer(account_id, first, last, pw,open_checking,open_savings,balance_checking,balance_savings)
                 customer.active = ( row["active"]  == "true")
                 customer.overdrafts = row["overdrafts"]
                 self.customers.append(customer)
+        return self.customers
 
 
     def save_to_csv(self):
