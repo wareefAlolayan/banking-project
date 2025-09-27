@@ -189,4 +189,9 @@ class TestBankCore(unittest.TestCase):
         self.assertEqual(c.overdrafts, 0)
         c2 = self.bank.find_customer('10006')
     def test_record_overdraft(self):
-        pass
+        c = self.bank.find_customer('10006')
+        self.bank.record_overdraft(c, c.checking)
+        self.assertEqual(c.overdrafts, 1)
+        self.bank.record_overdraft(c,c.checking) #should be deactivated now
+        self.assertEqual(c.overdrafts, 2)
+        self.assertEqual(c.active, False) 
