@@ -129,16 +129,16 @@ def record_overdraft(self, customer, account):
 
 ## What I Learned
 
-Turning requirements into small checks (fee trigger, negative limit, floor, deactivation)
+- Turning requirements into small checks (fee trigger, negative limit, floor, deactivation)
 
-Separating UI (CLI input + error printing) from logic (Bank raises exceptions and enforces rules)
+- Separating UI (CLI input + error printing) from logic (Bank raises exceptions and enforces rules)
 
-dealing with CSV 
+- dealing with CSV 
 
-Testing the tricky parts
+- Testing the tricky parts
 
 ## Future Improvements
 
-    - Transaction history CSV
+- Transaction history CSV
 
-    - Password strength checks
+- Password strength checks
