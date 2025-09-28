@@ -32,7 +32,7 @@ The app loads data/bank.csv at start and saves after actions like deposit/withdr
 
 - **Transactions**
 
-- Deposit: amount > 0; if the customer was inactive and all existing accounts are now >= 0, they are reactivated and overdrafts reset to 0
+    - Deposit: amount > 0; if the customer was inactive and all existing accounts are now >= 0, they are reactivated and overdrafts reset to 0
 
     - Withdraw: amount > 0; account must exist; overdraft rules enforced
 
@@ -89,7 +89,7 @@ The app loads data/bank.csv at start and saves after actions like deposit/withdr
     - After each successful action → save_to_csv()
 
 ## Code I’m Proud Of (withdraw + overdraft)
-`def withdraw(self, customer, kind, amount):
+```def withdraw(self, customer, kind, amount):
     amount = int(amount)
     if customer.active == False:
         raise ValueError('account is deactivated')
@@ -115,13 +115,13 @@ The app loads data/bank.csv at start and saves after actions like deposit/withdr
     acnt.withdraw(amount)
     if fee_applies:
         self.record_overdraft(customer, acnt)  
-    return acnt.balance`
+    return acnt.balance
 
 def record_overdraft(self, customer, account):
         account.withdraw(self.overdraft_fee)
         customer.overdrafts = int(customer.overdrafts) + 1
         if customer.overdrafts >= 2:
-            customer.deactivate()`
+            customer.deactivate()```
 
 ## What I Learned
 
