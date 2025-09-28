@@ -170,8 +170,6 @@ class Bank:
         customer = self.find_customer(account_id)
         if customer == None:
             raise ValueError('customer not found')
-        if customer.active == False:
-            raise ValueError('account is deactivated')
         if customer.verify_password(password) == False:
             raise ValueError('invalid password')
         return customer
@@ -274,7 +272,7 @@ class Bank:
         acnt.deposit(amount)
         # reactivate only if the account was inactive and all existing accounts are now >= 0
         if customer.active == False:
-            customer.reactivate()
+            self.reactivate(customer)
         return acnt.balance
 
     #overdraft methods

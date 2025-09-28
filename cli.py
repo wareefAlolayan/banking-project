@@ -40,6 +40,7 @@ def main():
             else:
                 print('invalid option')
         elif logged_in == True:
+            print('-----------------------------------------')
             print(f'Welcome {customer.full_name}')
             if customer.checking != None:
                 cb = customer.checking.balance
@@ -55,7 +56,9 @@ def main():
             print('2) withdraw')
             print('3) Transfer between your accounts')
             print('4) Transfer to different customer')
-            print('5) Logout')
+            print('5) Open Account')
+            print('6) Logout')
+            print('-----------------------------------------')
             choice = input('your choice: ').strip()
             try:
                 if choice == '1':
@@ -90,6 +93,12 @@ def main():
                     print('transfer done')
 
                 elif choice == '5':
+                    kind = input('account (checking/savings): ').lower()
+                    initial = int(input('initial deposit: '))
+                    customer.open_account(kind, initial)
+                    bank.save_to_csv()
+                    print(f'opened new {kind} account')
+                elif choice == '6':
                     logged_in = False
                 else:
                     print('invalid option')
