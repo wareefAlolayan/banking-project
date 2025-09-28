@@ -89,7 +89,8 @@ The app loads data/bank.csv at start and saves after actions like deposit/withdr
     - After each successful action → save_to_csv()
 
 ## Code I’m Proud Of (withdraw + overdraft)
-```def withdraw(self, customer, kind, amount):
+```python
+def withdraw(self, customer, kind, amount):
     amount = int(amount)
     if customer.active == False:
         raise ValueError('account is deactivated')
@@ -121,7 +122,10 @@ def record_overdraft(self, customer, account):
         account.withdraw(self.overdraft_fee)
         customer.overdrafts = int(customer.overdrafts) + 1
         if customer.overdrafts >= 2:
-            customer.deactivate()```
+            customer.deactivate()
+```
+
+
 
 ## What I Learned
 
